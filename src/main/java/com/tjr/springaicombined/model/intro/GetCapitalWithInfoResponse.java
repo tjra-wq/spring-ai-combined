@@ -1,4 +1,4 @@
-package com.tjr.springaiintro.model;
+package com.tjr.springaicombined.model.intro;
 
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 

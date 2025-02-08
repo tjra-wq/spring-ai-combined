@@ -1,8 +1,14 @@
-package com.tjr.springaiintro.services;
+package com.tjr.springaicombined.services.intro;
 
-import com.tjr.springaiintro.model.*;
+import com.tjr.springaicombined.model.Answer;
+import com.tjr.springaicombined.model.Question;
+import com.tjr.springaicombined.model.intro.GetCapitalRequest;
+import com.tjr.springaicombined.model.intro.GetCapitalResponse;
+import com.tjr.springaicombined.model.intro.GetCapitalWithInfoResponse;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -17,14 +23,16 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class OpenAIServiceImpl implements OpenAIService {
+public class IntroServiceImpl implements IntroService {
 
     private final ChatModel chatModel;
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpenAIServiceImpl.class);
 
-    @Value("classpath:templates/get-capital-prompt.st")
+    private static final Logger log = LoggerFactory.getLogger(IntroServiceImpl.class);
+
+    @Value("classpath:templates/intro/get-capital-prompt.st")
     private Resource getCapitalPrompt;
 
+//    not required because we have model for this
 //    @Value("classpath:templates/get-capital-with-info-prompt.st")
 //    private Resource getCapitalWithInfoPrompt;
 
