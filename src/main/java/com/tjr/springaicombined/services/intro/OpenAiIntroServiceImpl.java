@@ -1,8 +1,12 @@
-package com.tjr.springaiintro.services;
+package com.tjr.springaicombined.services.intro;
 
-import com.tjr.springaiintro.model.*;
-import groovy.util.logging.Slf4j;
+import com.tjr.springaicombined.model.Answer;
+import com.tjr.springaicombined.model.Question;
+import com.tjr.springaicombined.model.intro.GetCapitalRequest;
+import com.tjr.springaicombined.model.intro.GetCapitalResponse;
+import com.tjr.springaicombined.model.intro.GetCapitalWithInfoResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -17,12 +21,11 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class OpenAIServiceImpl implements OpenAIService {
+public class OpenAiIntroServiceImpl implements OpenAiIntroService {
 
     private final ChatModel chatModel;
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpenAIServiceImpl.class);
 
-    @Value("classpath:templates/get-capital-prompt.st")
+    @Value("classpath:templates/intro/get-capital-prompt.st")
     private Resource getCapitalPrompt;
 
 //    @Value("classpath:templates/get-capital-with-info-prompt.st")
@@ -33,7 +36,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     @Override
     public String getAnswer(String question) {
-        log.info("Question: " + question);
+        log.info("Question: {}", question);
         PromptTemplate promptTemplate = new PromptTemplate(question);
         Prompt prompt = promptTemplate.create();
 
@@ -43,7 +46,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     @Override
     public Answer getAnswer(Question question) {
-        log.info("Question: " + question);
+        log.info("Question: {}", question);
         PromptTemplate promptTemplate = new PromptTemplate(question.question());
         Prompt prompt = promptTemplate.create();
 
@@ -55,7 +58,7 @@ public class OpenAIServiceImpl implements OpenAIService {
     public GetCapitalResponse getCapital(GetCapitalRequest getCapitalRequest) {
         BeanOutputConverter<GetCapitalResponse> beanOutputConverter = new BeanOutputConverter<>(GetCapitalResponse.class);
         String format = beanOutputConverter.getFormat();
-        log.info("Question (answer will be in json): " + getCapitalRequest);
+        log.info("Question (answer will be in json): {}", getCapitalRequest);
 
         PromptTemplate promptTemplate = new PromptTemplate(getCapitalPrompt);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", getCapitalRequest.stateOrCountry(),
@@ -68,7 +71,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     @Override
     public GetCapitalWithInfoResponse getCapitalWithInfo(GetCapitalRequest getCapitalRequest) {
-        log.info("Question: " + getCapitalRequest);
+        log.info("Question: {}", getCapitalRequest);
         BeanOutputConverter<GetCapitalWithInfoResponse> beanOutputConverter = new BeanOutputConverter<>(GetCapitalWithInfoResponse.class);
         String format = beanOutputConverter.getFormat();
 
