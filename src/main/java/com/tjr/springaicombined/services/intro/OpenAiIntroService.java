@@ -7,7 +7,6 @@ import com.tjr.springaicombined.model.intro.GetCapitalResponse;
 import com.tjr.springaicombined.model.intro.GetCapitalWithInfoResponse;
 
 public interface OpenAiIntroService {
-//    String getAnswer(String question);
     Answer getAnswer(Question question);
     GetCapitalResponse getCapital(GetCapitalRequest stateOrCountry);
     GetCapitalWithInfoResponse getCapitalWithInfo(GetCapitalRequest getCapitalRequest);

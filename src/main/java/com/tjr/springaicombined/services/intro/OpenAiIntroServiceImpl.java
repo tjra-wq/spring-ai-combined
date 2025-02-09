@@ -35,16 +35,6 @@ public class OpenAiIntroServiceImpl implements OpenAiIntroService {
 //    ObjectMapper objectMapper;
 
     @Override
-    public String getAnswer(String question) {
-        log.info("Question: {}", question);
-        PromptTemplate promptTemplate = new PromptTemplate(question);
-        Prompt prompt = promptTemplate.create();
-
-        ChatResponse chatResponse = chatModel.call(prompt);
-        return chatResponse.getResult().getOutput().getContent();
-    }
-
-    @Override
     public Answer getAnswer(Question question) {
         log.info("Question: {}", question);
         PromptTemplate promptTemplate = new PromptTemplate(question.question());
